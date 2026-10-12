@@ -15,9 +15,20 @@ npx serve .
 python -m http.server 8000
 ```
 
-## Publish it
+## Deployment
 
-It is a static site with no build step. On GitHub, open **Settings › Pages**, choose **Deploy from a branch**, and pick `main` with the `/ (root)` folder.
+GitHub Actions checks and deploys the site ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)):
+
+- **Every push and pull request** validates `data/techniques.json` and checks the script's syntax.
+- **Every push to `main`** then publishes `index.html`, `assets/` and `data/` to GitHub Pages. You can also start a deploy by hand from the **Actions** tab with **Run workflow**.
+
+One-time setup: in the repository's **Settings › Pages**, set **Source** to **GitHub Actions**.
+
+To run the data check yourself before pushing:
+
+```bash
+node scripts/validate-data.mjs
+```
 
 ## Files
 
@@ -27,6 +38,8 @@ It is a static site with no build step. On GitHub, open **Settings › Pages**, 
 | `assets/styles.css` | Styles |
 | `assets/app.js` | Tree layout, search, details panel and deep links |
 | `data/techniques.json` | The technique tree |
+| `scripts/validate-data.mjs` | Data check run by CI |
+| `.github/workflows/deploy.yml` | CI and deployment to GitHub Pages |
 
 ## Editing the techniques
 
